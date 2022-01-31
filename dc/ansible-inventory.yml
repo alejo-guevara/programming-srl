@@ -3,9 +3,9 @@ all:
     linux:
       hosts:
         dc-client1:
-          ansible_host: 172.20.20.2
-        dc-client2:
           ansible_host: 172.20.20.3
+        dc-client2:
+          ansible_host: 172.20.20.2
     srl:
       hosts:
         dc-leaf1:
