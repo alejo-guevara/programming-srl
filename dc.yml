@@ -1,0 +1,50 @@
+name: dc
+prefix: 
+
+topology:
+  kinds:
+    srl:
+      image: ghcr.io/nokia/srlinux
+    linux:
+      image: ghcr.io/hellt/network-multitool
+  nodes:
+    leaf1:
+      kind: srl
+      mgmt_ipv4: 172.20.20.101
+      type: ixrd2
+      ports:
+        - 8081:80
+    leaf2:
+      kind: srl
+      mgmt_ipv4: 172.20.20.102
+      type: ixrd2
+      ports:
+        - 8082:80
+    spine1:
+      kind: srl
+      mgmt_ipv4: 172.20.20.103
+      type: ixr6
+    spine2:
+      kind: srl
+      mgmt_ipv4: 172.20.20.104
+      type: ixr6
+    client1:
+      kind: linux
+      binds:
+        - dc-config/client1.sh:/client1.sh
+      exec:
+        - bash /client1.sh
+    client2:
+      kind: linux
+      binds:
+        - dc-config/client2.sh:/client2.sh
+      exec:
+        - bash /client2.sh
+
+  links:
+    - endpoints: ["leaf1:e1-1", "spine1:e1-1"]
+    - endpoints: ["leaf2:e1-1", "spine1:e1-2"]
+    - endpoints: ["leaf1:e1-2", "spine2:e1-1"]
+    - endpoints: ["leaf2:e1-2", "spine2:e1-2"]
+    - endpoints: ["client1:eth1", "leaf1:e1-10"]
+    - endpoints: ["client2:eth1", "leaf2:e1-10"]
