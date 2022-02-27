@@ -4,7 +4,7 @@ prefix:
 topology:
   kinds:
     srl:
-      image: ghcr.io/nokia/srlinux
+      image: ghcr.io/nokia/srlinux:21.6.3
     linux:
       image: ghcr.io/hellt/network-multitool
   nodes:
