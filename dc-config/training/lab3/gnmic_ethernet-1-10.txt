@@ -1,0 +1,3 @@
+gnmic -a dc-leaf2:57400 -u admin -p admin --skip-verify set --update-path "/interface[name=ethernet-1/10]/admin-state" --update-value "disable" --encoding=json_ietf
+
+gnmic -a dc-leaf2:57400 -u admin -p admin --skip-verify set --update-path "/interface[name=ethernet-1/10]/admin-state" --update-value "enable" --encoding=json_ietf

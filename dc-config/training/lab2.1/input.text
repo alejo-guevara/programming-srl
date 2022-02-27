@@ -1,0 +1,8 @@
+cat <<EOF >> ./input.text
+name: "Pat"
+data {
+  number_of_replies: 1000 
+  title: "The Cat"
+}
+EOF
+

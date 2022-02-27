@@ -1,0 +1,18 @@
+all:
+  children:
+    linux:
+      hosts:
+        dc-client1:
+          ansible_host: 172.20.20.3
+        dc-client2:
+          ansible_host: 172.20.20.2
+    srl:
+      hosts:
+        dc-leaf1:
+          ansible_host: 172.20.20.101
+        dc-leaf2:
+          ansible_host: 172.20.20.102
+        dc-spine1:
+          ansible_host: 172.20.20.103
+        dc-spine2:
+          ansible_host: 172.20.20.104

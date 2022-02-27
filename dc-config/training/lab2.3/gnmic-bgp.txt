@@ -1,0 +1,8 @@
+
+# disable peer 10.1.1.1 on spine1
+gnmic -a dc-spine1:57400 -u admin -p admin --skip-verify  set --update /network-instance[name=default]/protocols/bgp/neighbor[peer-address=10.1.1.1]/admin-state:::string:::disable
+
+# enable peer 10.1.1.1 on spine1
+gnmic -a dc-spine1:57400 -u admin -p admin --skip-verify  set --update /network-instance[name=default]/protocols/bgp/neighbor[peer-address=10.1.1.1]/admin-state:::string:::enable
+
+

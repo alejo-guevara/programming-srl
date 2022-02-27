@@ -1,0 +1,30 @@
+$ cat showvlan.json 
+{
+  "interface": [
+    {
+      "name": "ethernet-1/1",
+      "description": "Connected to dc-spine-1",
+      "vlan-tagging": false
+    },
+    {
+      "name": "ethernet-1/2",
+      "description": "Connected to dc-spine-2",
+      "vlan-tagging": false
+    },
+    {
+      "name": "ethernet-1/10",
+      "description": "Connected to host-10",
+      "vlan-tagging": false
+    },
+    {
+      "name": "irb0"
+    },
+    {
+      "name": "lo0"
+    },
+    {
+      "name": "mgmt0",
+      "description": "Management Interface"
+    }
+  ]
+}

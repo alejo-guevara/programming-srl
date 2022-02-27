@@ -1,0 +1,17 @@
+# gNMI target address; CLI flag `--address`
+address:
+  - "dc-leaf1:57400"
+  - "dc-leaf2:57400"
+  - "dc-spine1:57400"
+  - "dc-spine2:57400"
+# gNMI target user name; CLI flag `--username`
+username: admin
+# gNMI target user password; CLI flag `--password`
+password: admin
+# connection mode; CLI flag `--skip-verify
+skip-verify: true
+# encoding
+encoding: json_ietf
+# log file location; CLI flag `--log-file`
+log-file: /tmp/gnmic.log
+

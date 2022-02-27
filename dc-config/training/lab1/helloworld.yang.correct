@@ -1,0 +1,35 @@
+module helloworld {
+
+    yang-version 1.1;
+    namespace "urn:srl_test/helloworld";
+
+    prefix "helloworld";
+
+    container helloworld {
+        presence "Top-level container for the helloworld app";
+        description "Top level enclosing container for helloworld app
+                     config and operational state data";
+
+        leaf name {
+            description "Who am I saying hello to Today?";
+            type string {
+                length 0..255;
+                pattern '[A-Za-z0-9]*';
+            }
+        }
+
+        leaf counter {
+            description "Number of events";
+            type uint32;
+            config false;
+        }
+
+
+        leaf response {
+            config false;
+            description "Response to input";
+            type string;
+        }
+    }
+}
+

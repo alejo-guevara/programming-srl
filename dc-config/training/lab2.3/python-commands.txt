@@ -1,0 +1,109 @@
+
+### lab 2.3.1
+
+cd lab2
+python3 -m grpc_tools.protoc -I ../gnmi/proto/gnmi  --python_out=. --grpc_python_out=. ../gnmi/proto/gnmi/gnmi.proto
+python3 -m grpc_tools.protoc -I ../gnmi/proto/gnmi  --python_out=. --grpc_python_out=. ../gnmi/proto/gnmi/gnmi_ext.proto
+
+
+### lab 2.3.2
+
+###
+### python3 start >>>>
+###
+import grpc
+from gnmi_pb2 import CapabilityRequest
+from gnmi_pb2_grpc import gNMIStub
+username = 'admin'
+password = 'admin'
+metadata = [('username', username), ('password', password)]
+rootcert = "../dc/ca/root/root-ca.pem"
+with open(rootcert, 'rb') as f:
+  cert = grpc.ssl_channel_credentials(f.read())
+
+channel = grpc.secure_channel('dc-leaf1:57400', credentials=cert)
+stub = gNMIStub(channel)
+cap_request = CapabilityRequest()
+cap_response = stub.Capabilities(cap_request, metadata=metadata)
+print(cap_response)
+###
+### python3 end
+###
+
+cp /home/training/lab2.3/gnmi_capabilities.py .
+python3 ./gnmi_capabilities.py
+
+### lab 2.3.3
+
+###
+### python3 start >>>
+###
+import grpc
+from gnmi_pb2_grpc import gNMIStub
+from gnmi_pb2 import GetRequest, Path, PathElem
+username = 'admin'
+password = 'admin'
+metadata = [('username', username), ('password', password)]
+rootcert = "../dc/ca/root/root-ca.pem"
+with open(rootcert, 'rb') as f:
+  cert = grpc.ssl_channel_credentials(f.read())
+
+channel = grpc.secure_channel('dc-leaf1:57400', credentials=cert)
+stub = gNMIStub(channel)
+path_eth_1_1 = Path(elem = [PathElem(name="interface", key={ "name":"ethernet-1/1" })])
+print(path_eth_1_1)
+get_message = GetRequest(path = [path_eth_1_1], type=1, encoding=4)
+print(get_message)
+get_response = stub.Get(get_message, metadata=metadata)
+print(get_response)
+import json
+interface_dict = json.loads(get_response.notification[0].update[0].val.json_ietf_val)
+print(interface_dict)
+import pprint
+pprint.pprint(interface_dict)
+print(interface_dict['admin-state'])
+print(interface_dict['subinterface'][0]['admin-state'])
+print(interface_dict['subinterface'][0]['ipv4']['address'][0]['ip-prefix'])
+interface_dict['subinterface'][0]['ipv4']['address'][0]['ip-prefix'] = '192.168.1.1/24'
+print(interface_dict['subinterface'][0]['ipv4']['address'][0]['ip-prefix'])
+json_string = json.dumps(interface_dict)
+type(json_string)
+print(json_string)
+###
+### python3 end
+###
+
+cp /home/training/lab2.3/gnmi_get_multi_target.py .
+python3 gnmi_get_multi_target.py
+
+### lab 2.3.4
+copy /home/training/lab2.3/pygnmi_get.py .
+vim pygnmi_get.py
+
+python3 pygnmi_get.py
+
+### inside pygnmi_get.py
+
+        lo0_dict['subinterface'][0]['ipv4']['address'][0]['ip-prefix'] = "123.123.123.123/32"
+        result = gc.set( update=[('interface[name=lo1]', lo0_dict)], encoding = 'json_ietf')
+
+### end changes to pygnmi_get.py
+
+python3 pygnmi_get.py
+
+cp /home/training/lab2.3/gnmi_delete.py .
+cp /home/training/lab2.3/gnmi_getset.py .
+
+python3 pygnmi_delete.py
+python3 pygnmi_getset.py
+
+#### lab 2.3.5
+
+cp /home/training/lab2.3/pygnmi_telemetry.py .
+python3  pygnmi_telemetry.py
+
+gnmic -a dc-spine1:57400 -u admin -p admin --skip-verify  set --update /network-instance[name=default]/protocols/bgp/neighbor[peer-address=10.1.1.1]/admin-state:::string:::disable
+
+gnmic -a dc-spine1:57400 -u admin -p admin --skip-verify  set --update /network-instance[name=default]/protocols/bgp/neighbor[peer-address=10.1.1.1]/admin-state:::string:::enable
+
+

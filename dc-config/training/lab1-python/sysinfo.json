@@ -1,0 +1,16 @@
+$ cat sysinfo.json 
+{
+  "basic system info": {
+    "Hostname": "leaf1",
+    "Chassis Type": "7220 IXR-D2",
+    "Part Number": "Sim Part No.",
+    "Serial Number": "Sim Serial No.",
+    "System MAC Address": "02:66:16:FF:00:00",
+    "Software Version": "v21.6.3",
+    "Build Number": "398-gd37728238a",
+    "Architecture": "x86_64",
+    "Last Booted": "2021-11-23T22:05:53.653Z",
+    "Total Memory": "7671812 kB",
+    "Free Memory": "2384828 kB"
+  }
+}

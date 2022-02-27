@@ -1,0 +1,15 @@
+# httpie - gnmi-server for mgmg network instance, state datastore
+http --auth admin:admin http://dc-leaf1/jsonrpc method=get id=1 jsonrpc=2.0 params:='{"commands": [{"path": "/system/gnmi-server/network-instance[name=mgmt]","datastore": "state"}]}'
+
+# httpie -  gnmi-server for mgmg network instance, running datastore
+http --auth admin:admin http://dc-leaf1/jsonrpc method=get id=1 jsonrpc=2.0 params:='{"commands": [{"path": "/system/gnmi-server/network-instance[name=mgmt]","datastore": "running"}]}'
+
+# httpie - bgp config
+http --auth admin:admin http://dc-leaf1/jsonrpc method=get id=1 jsonrpc=2.0 params:='{"commands": [{"path": "/network-instance[name=default]/protocols/bgp","datastore": "running"}]}'
+
+# httpie - bgp config w/o subtrees
+http --auth admin:admin http://dc-leaf1/jsonrpc method=get id=1 jsonrpc=2.0 params:='{"commands": [{"path": "/network-instance[name=default]/protocols/bgp","datastore": "running","recursive":false }]}'
+
+# hhttpie - bgp config with default values
+ http --auth admin:admin http://dc-leaf1/jsonrpc method=get id=1 jsonrpc=2.0 params:='{"commands": [{"path": "/network-instance[name=default]/protocols/bgp","datastore": "running","recursive":false, "include-field-defaults": true }]}'
+

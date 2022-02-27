@@ -1,0 +1,10 @@
+The 4 errors:
+
+- namespace is a mandatory statement: a unique namespace must be provided, usuasally in the form of an URL or URN, for example namespace "urn:srl_test/helloworld";
+
+- The helloworld node could be either a list or a container - if a list it must have a key - for our purpose a container will be good enough, and the statement 'presence' is already there and can apply only to containers  - replace 'list' by 'container'.
+
+- The only mandatory sub-statement of a leaf is its type - the leaf counter has no type - add type uint32 for example
+
+- leaf response is of type strung  - which doesn't exist - either create a derived type with that name, or simply consider it to be a typo and replace it with 'string'
+

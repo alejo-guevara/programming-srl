@@ -1,0 +1,26 @@
+// this is the client code that can be entered into the python3 console 
+import grpc
+import helloworld_pb2
+import helloworld_pb2_grpc
+
+channel = grpc.insecure_channel('localhost:50051')
+
+stub = helloworld_pb2_grpc.GreeterStub(channel)
+
+request = helloworld_pb2.HelloRequest()
+request.name = 'Sam'
+request.data.title = 'President'
+request.data.number_of_replies = 5
+
+// simple request-response RPC
+response = stub.SayHello(request)
+print(response)
+
+// streaming server 
+response_iterator = stub.SayStreambackHello(request)
+print(next(response_iterator))
+print(next(response_iterator))
+print(next(response_iterator))
+print(next(response_iterator))
+print(next(response_iterator))
+

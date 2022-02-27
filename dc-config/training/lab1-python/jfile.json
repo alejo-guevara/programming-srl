@@ -1,0 +1,22 @@
+$ cat jfile.json 
+host_server:
+  ip: 100.100.100.1
+  password: mypasswd1
+  user: user1
+ftp_server:
+  ftp_ip: 200.200.200.2
+  ftp_user: student
+  ftp_password: student
+  ssh_user: mysshuser
+  ssh_password: sshpw1
+lab_name: sr-lin-1
+routers:
+  r01:
+    ip: 192.168.250.1
+    password: rtrpw1
+    user: student
+  r02:
+    ip: 192.168.250.2
+    password: rtrpw2
+    user: student
+

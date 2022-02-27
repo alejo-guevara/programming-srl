@@ -1,0 +1,31 @@
+# curl - get system name
+ curl -s -u admin:admin -d '{"jsonrpc": "2.0","id": 0,"method": "get","params": {"commands": [{"path": "/system/name","datastore": "state"}]}}' http://dc-leaf1/jsonrpc  | jq
+
+# curl - get system gnmi-server
+curl -s -u admin:admin -d '{"jsonrpc": "2.0","id": 0,"method": "get","params": {"commands": [{"path": "/system/gnmi-server","datastore": "state"}]}}' http://dc-leaf1/jsonrpc  | jq
+
+# curl get interface ethernet-1/1
+curl -s -u admin:admin -d '{"jsonrpc": "2.0","id": 0,"method": "get","params": {"commands": [{"path": "/interface[name=ethernet-1/1]","datastore": "state"}]}}' http://dc-leaf1/jsonrpc  | jq
+
+# curl - get interface ethernet-1/1 config only
+curl -s -u admin:admin -d '{"jsonrpc": "2.0","id": 0,"method": "get","params": {"commands": [{"path": "/interface[name=ethernet-1/1]","datastore": "running"}]}}' http://dc-leaf1/jsonrpc  | jq
+
+# curl - get interface ethernet-1/1, config only and non recursive
+ curl -s -u admin:admin -d '{"jsonrpc": "2.0","id": 0,"method": "get","params": {"commands": [{"path": "/interface[name=ethernet-1/1]","datastore": "running", "recursive": false}]}}' http://dc-leaf1/jsonrpc  | jq
+
+# curl - set the hostname
+curl -s -u admin:admin -n -d '{"jsonrpc": "2.0","id": 0,"method": "set","params": {"commands": [{"action": "update", "path": "/system/name/host-name", "value": "new-leaf1"}]}}' http://dc-leaf1/jsonrpc | jq
+
+# curl - set interface lo0 description
+ curl -s -u admin:admin -n -d '{"jsonrpc": "2.0","id": 0,"method": "set","params": {"commands": [{"action": "update", "path": "/interface[name=lo0]/description", "value": "new description for lo0"}]}}' http://dc-leaf1/jsonrpc | jq
+
+# curl - cli - show versions and show interface brief
+curl -s -u admin:admin -n -d '{"jsonrpc": "2.0","id": 0,"method": "cli","params": {"commands": ["show version", "show interface brief"]}}' http://dc-leaf1/jsonrpc | jq
+
+# curl - cli - show acl summary
+curl -s -u admin:admin -n -d '{"jsonrpc": "2.0","id": 0,"method": "cli","params": {"commands": ["show acl summary"] }}' http://dc-leaf1/jsonrpc | jq
+
+
+
+
+ 

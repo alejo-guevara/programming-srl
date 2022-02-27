@@ -1,0 +1,4 @@
+# wget - show version
+wget -q --user=admin --password=admin -O - --post-data='{"jsonrpc": "2.0","id": 0,"method": "cli","params": {"commands": ["show version"]}}'  http://dc-leaf1/jsonrpc | jq
+
+

@@ -1,0 +1,61 @@
+### lab 2.2.2
+
+gnmic version
+gnmic capabilities -a 172.20.20.1:57400 -u admin -p admin
+openssl s_client -connect 172.20.20.101:57400 -brief
+openssl s_client -connect 172.20.20.101:57400 -brief -CAfile dc/ca/root/root-ca.pem -brief
+openssl s_client -connect 172.20.20.101:57400 | openssl x509 -noout -ext subjectAltName
+openssl s_client -connect 172.20.20.101:57400 | openssl x509 -noout -text
+openssl s_client -connect 172.20.20.101:57400 -msg
+openssl s_client -connect 172.20.20.101:57400 -debug
+gnmic capabilities -a dc-leaf1:57400 -u admin -p admin --tls-ca dc/ca/root/root-ca.pem
+gnmic capabilities -a dc-leaf1:57400 -u admin -p admin --skip-verify
+
+
+### lab 2.2.3
+
+mkdir ~/lab2
+cd lab2
+cp /home/training/lab2.2/gnmic.yaml .
+gnmic --config ~/lab2/gnmic.yaml capabilities
+gnmic --config ~/lab2/gnmic.yaml get --path /system/name
+gnmic --config ~/lab2/gnmic.yaml get --path /system/name --encoding ASCII
+gnmic --config ~/lab2/gnmic.yaml get --path /interface[name=mgmt0]
+gnmic --config ~/lab2/gnmic.yaml get --path /interface[name=mgmt0] --type config
+gnmic --config ~/lab2/gnmic.yaml get --path /interface[name=mgmt0] --type config --print-request
+gnmic --config ~/lab2/gnmic.yaml get --path /interface[name=mgmt0] --print-request
+gnmic --config ~/lab2/gnmic.yaml get --prefix /interface[name=mgmt0]/subinterface --path ipv4/address --path ipv6/address
+gnmic --config ~/lab2/gnmic.yaml get --path /system/gnmi-server --print-request --format prototext
+gnmic --config ~/lab2/gnmic.yaml get --path /system/gnmi-server --print-request --format proto | hexdump
+cp /home/training/lab2.2/multi.yaml .
+gnmic --config ~/lab2/multi.yaml get --path /system/name --encoding ascii
+gnmic --config ~/lab2/gnmic.yaml get --path /
+gnmic --config ~/lab2/gnmic.yaml get --path / --type config
+gnmic --config ~/lab2/gnmic.yaml get --path /network-instance[name=default]/protocols/bgp --type config
+gnmic --config ~/lab2/gnmic.yaml get --path /network-instance[name=default]/protocols/bgp/neighbor[peer-address=10.1.1.0]
+gnmic --config ~/lab2/gnmic.yaml get --path /network-instance[name=default]/protocols/bgp/neighbor[peer-address=*]/session-state
+gnmic --config ~/lab2/gnmic.yaml get --path /system/gnmi-server/network-instance[name=mgmt]
+gnmic --config ~/lab2/gnmic.yaml get --path /acl/cpm-filter/ipv4-filter/entry[sequence-id=10]
+
+### lab 2.2.4
+
+gnmic --config ~/lab2/gnmic.yaml set --update-path /system/name/host-name --update-value "new-leaf1" --print-request
+gnmic --config ~/lab2/gnmic.yaml set --update /system/name/host-name:::string:::leaf1 --print-request
+gnmic --config ~/lab2/gnmic.yaml set --update-path /interface[name=lo1]/subinterface[index=0]/ipv4/address[ip-prefix="10.10.10.10/32"] --update-value {} --print-request
+gnmic --config ~/lab2/gnmic.yaml set --update /interface[name=lo1]/admin-state:::string:::disable --print-request
+gnmic --config ~/lab2/gnmic.yaml set --replace /interface[name=lo1]:::string:::{} --print-request
+gnmic --config ~/lab2/gnmic.yaml set --delete /interface[name=lo1] --print-request                                                   
+gnmic --config ~/lab2/gnmic.yaml get --path /interface[name=lo*]/admin-state --print-request
+
+### lab 2.2.5
+
+
+gnmic --config ~/lab2/gnmic.yaml subscribe --path /interface[name=mgmt0]/statistics
+gnmic --config ~/lab2/gnmic.yaml subscribe --sample-interval 2s --path /interface[name=mgmt0]/traffic-rate
+gnmic --config ~/lab2/gnmic.yaml subscribe --stream-mode on-change --path /network-instance[name=default]/protocols/bgp/neighbor[peer-address=*]/session-state
+gnmic --config ~/lab2/gnmic.yaml get --path /system/gnmi-server/subscription
+gnmic -a dc-spine1:57400 -u admin -p admin --skip-verify  set --update /network-instance[name=default]/protocols/bgp/neighbor[peer-address=10.1.1.1]/admin-state:::string:::disable
+gnmic -a dc-spine1:57400 -u admin -p admin --skip-verify  set --update /network-instance[name=default]/protocols/bgp/neighbor[peer-address=10.1.1.1]/admin-state:::string:::enable
+gnmic --config ~/lab2/gnmic.yaml get --path / | grep '  "time":'
+gnmic --config ~/lab2/gnmic.yaml subscribe --mode once --path / | grep '  "time":'
+
