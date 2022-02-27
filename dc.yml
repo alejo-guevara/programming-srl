@@ -1,5 +1,5 @@
 name: dc
-prefix: dc
+prefix: __lab-name
 
 topology:
   kinds:
